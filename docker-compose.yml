@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+  app:
+    container_name: webtronics_task
+    hostname: app
+    user: '1000:1000'
+    restart: unless-stopped
+    build: 
+      context: ./src/
+      network: host
+    networks:
+      - webtronics_test-network
+    volumes:
+      - ./src/:/src/
+    ports:
+      - 5002:5002
+
+  postgres:
+    image: postgres:15.2
+    container_name: postgres_webtronics_task
+    hostname: postgres
+    restart: always
+    networks:
+      - webtronics_test-network
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - ./postgres/data/:/var/lib/postgresql/data/
+    command:
+      - -p 5445
+    ports:
+      - 5445:5445
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d webtronics_test"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:latest
+    container_name: redis-server_webtronics_task
+    restart: always
+    networks:
+      - webtronics_test-network
+    ports:
+        - "6379:6379"
+    command: [ "redis-server" ]
+
+networks:
+  webtronics_test-network:
+    driver: bridge
