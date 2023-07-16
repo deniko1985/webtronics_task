@@ -1,5 +1,5 @@
 import sqlalchemy
-from sqlalchemy import Column, Integer, String, Sequence, JSON, ForeignKey, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, Sequence, ForeignKey, Boolean, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
 metadata = sqlalchemy.MetaData()
@@ -14,7 +14,6 @@ class Posts(Base):
     email = Column(String(150))
     name_posts = Column(String(100))
     text_posts = Column(String())
-    emotion = Column(JSON)
     date = Column(DateTime())
 
 

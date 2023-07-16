@@ -2,6 +2,6 @@ postgres/
 .git/
 src/.vscode/
 *.env
-*/__pycache__/
+__pycache__/
 /src/temp/
 /src/key
