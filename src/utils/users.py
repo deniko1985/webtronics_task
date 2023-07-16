@@ -32,7 +32,6 @@ async def get_user_by_id(user_id: int):
         query = (
                 users.select()
                 .where(users.c.id == user_id)
-                .where(users.c.is_active == True)
                 )
         return await database.fetch_one(query)
     except SQLAlchemyError as error:
@@ -138,8 +137,6 @@ async def create_user(email, password):
             .values(
                 email=email,
                 hashed_password=hashed_password,
-                is_active=True,
-                auth_token='',
             )
             .returning(
                 users.c.id, users.c.email, users.c.is_active

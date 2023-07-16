@@ -15,18 +15,6 @@ users_table = sqlalchemy.Table(
         ),
     sqlalchemy.Column("email", sqlalchemy.String(), unique=True, index=True),
     sqlalchemy.Column("hashed_password", sqlalchemy.String()),
-    sqlalchemy.Column(
-        "is_active",
-        sqlalchemy.Boolean(),
-        server_default=sqlalchemy.sql.expression.true(),
-        nullable=False,
-    ),
-    sqlalchemy.Column(
-        'auth_token', sqlalchemy.String(),
-        default=""),
-    sqlalchemy.Column(
-        "role",
-        sqlalchemy.String()),
 )
 
 tokens = sqlalchemy.Table(
